@@ -1,5 +1,7 @@
 package internetshop.controller;
 
+import java.io.IOException;
+
 import internetshop.lib.Inject;
 import internetshop.model.Bucket;
 import internetshop.model.Order;
@@ -11,7 +13,6 @@ import internetshop.service.UserService;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class CompleteOrderController extends HttpServlet {
     @Inject

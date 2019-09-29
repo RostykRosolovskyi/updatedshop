@@ -1,7 +1,6 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
-import internetshop.model.Item;
 import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.ItemService;
@@ -19,14 +18,6 @@ public class InjectDataController extends HttpServlet {
     private static UserService userService;
     @Inject
     private static ItemService itemService;
-
-    @Override
-    public void init() throws ServletException {
-        itemService.add(new Item("Xiaomi", 15.));
-        itemService.add(new Item("Iphone", 350.));
-        itemService.add(new Item("Samsung", 40.));
-        itemService.add(new Item("Huawei", 15.));
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
