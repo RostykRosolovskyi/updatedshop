@@ -8,6 +8,7 @@ import internetshop.dao.impl.BucketDaoImpl;
 import internetshop.dao.impl.ItemDaoImpl;
 import internetshop.dao.impl.OrderDaoImpl;
 import internetshop.dao.impl.UserDaoImpl;
+import internetshop.dao.jdbc.ItemDaoJdbcImpl;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
 import internetshop.service.OrderService;
@@ -16,9 +17,27 @@ import internetshop.service.impl.BucketServiceImpl;
 import internetshop.service.impl.ItemServiceImpl;
 import internetshop.service.impl.OrderServiceImpl;
 import internetshop.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Factory {
-    private static ItemDao itemDaoInstance;
+    private static Connection connection;
+    private static Logger logger = Logger.getLogger(Factory.class);
+
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection =
+                    DriverManager.getConnection("jdbc:mysql://localhost:3306/shopupdate?" +
+                            "user=rostyk&password=password&serverTimezone=UTC");
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error("Cant establish connection");
+        }
+    }
+
     private static UserDao userDaoInstance;
     private static OrderDao orderDaoInstance;
     private static BucketDao bucketDaoInstance;
@@ -32,10 +51,7 @@ public class Factory {
     }
 
     public static ItemDao getItemDao() {
-        if (itemDaoInstance == null) {
-            itemDaoInstance = new ItemDaoImpl();
-        }
-        return itemDaoInstance;
+        return new ItemDaoJdbcImpl(connection);
     }
 
     public static UserDao getUserDao() {
